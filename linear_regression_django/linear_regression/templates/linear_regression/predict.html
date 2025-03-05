@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Prediction</title>
+    <style>
+        body {
+            background-color: #111;
+            color: #00FF00;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            color: #FF00FF;
+            font-size: 2.5em;
+            margin-top: 20px;
+            text-shadow: 0 0 10px #FF00FF, 0 0 20px #FF00FF;
+        }
+        button {
+            background-color: #333;
+            color: #00FF00;
+            border: 2px solid #00FF00;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            font-family: 'Courier New', Courier, monospace;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #00FF00;
+            color: #111;
+            transition: all 0.3s ease-in-out;
+        }
+        table {
+            margin-top: 30px;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            font-size: 1.2em;
+            border: 1px solid #00FF00;
+        }
+        th {
+            background-color: #222;
+        }
+        tr:nth-child(even) {
+            background-color: #1a1a1a;
+        }
+        tr:nth-child(odd) {
+            background-color: #333;
+        }
+        h3 {
+            color: #FF00FF;
+            font-size: 1.8em;
+            margin-top: 40px;
+            text-shadow: 0 0 5px #FF00FF, 0 0 10px #FF00FF;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+        .form-container {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Advanced Polynomial Regression Prediction</h1>
+        
+        <div class="form-container">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Predict</button>
+            </form>
+        </div>
+        
+        {% if prediction %}
+            <h2>Prediction: {{ prediction }}</h2>
+        {% endif %}
+        
+        <h3>Prediction History:</h3>
+        <table>
+            <tr>
+                <th>Input</th>
+                <th>Prediction</th>
+                <th>Date</th>
+            </tr>
+            {% for item in all_predictions %}
+                <tr>
+                    <td>{{ item.input_value }}</td>
+                    <td>{{ item.predicted_value }}</td>
+                    <td>{{ item.created_at }}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="3">No predictions yet.</td></tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</body>
+</html>
